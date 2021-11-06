@@ -45,7 +45,7 @@ export default function Home() {
         gap={{ base: 0, md: 2 }}
       >
         {/* Left panel */}
-        <GridItem colSpan={2}>
+        <GridItem colSpan={2} order={{ base: 1, md: 0 }}>
           <BreadCrumb items={[{ url: "/", name: "Trang chủ" }]} />
           <Box
             height="min-content"
@@ -83,20 +83,40 @@ export default function Home() {
 
         {/* Right panel */}
         <GridItem padding={{ md: "2" }} my="2" rounded="md" shadow="2xl">
-          <Grid gap="2">
-            {charityProjects.map((project) => (
-              <Card
-                key={project.id}
-                title={project.title}
-                description={project.description}
-                image={project.image}
-                link={project.link}
-              />
-            ))}
-          </Grid>
+          <Box
+            height="min-content"
+            padding="2"
+            my="2"
+            backgroundColor={boxBackground}
+            rounded="md"
+            shadow="md"
+          >
+            <NewProjects />
+          </Box>
         </GridItem>
       </Grid>
     </div>
+  );
+}
+
+function NewProjects() {
+  return (
+    <Fragment>
+      <Heading as="h2" fontSize="xl" fontWeight="normal">
+        Dự án mới
+      </Heading>
+      <Grid gap="2" my={2}>
+        {charityProjects.map((project) => (
+          <Card
+            key={project.id}
+            title={project.title}
+            description={project.description}
+            image={project.image}
+            link={project.link}
+          />
+        ))}
+      </Grid>
+    </Fragment>
   );
 }
 
