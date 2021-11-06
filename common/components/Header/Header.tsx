@@ -31,7 +31,7 @@ function Header({}: Props): ReactElement {
       left={0}
       right={0}
       zIndex={100}
-      boxShadow="2xl"
+      boxShadow="md"
       alignItems="center"
       justifyContent="space-between"
       paddingX={{ base: 4, md: 16 }}
