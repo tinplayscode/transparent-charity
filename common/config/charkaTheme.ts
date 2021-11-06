@@ -30,13 +30,21 @@ const theme: ThemeConfig = extendTheme({
       900: "#1a202c",
     },
   },
+  fonts: {
+    body: "Inter, system-ui, sans-serif",
+    heading: "Inter",
+  },
   styles: {
     global: (props) => ({
       body: {
         fontFamily: "body",
         color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("gray.200", "gray.800")(props),
         lineHeight: "base",
+        bg: mode(
+          "linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%)",
+          "gray.800"
+        )(props),
+        backgroundAttachment: "fixed",
       },
       "*::placeholder": {
         color: mode("gray.400", "whiteAlpha.400")(props),
