@@ -21,10 +21,20 @@ import {
   AvatarBadge,
   Icon,
   useColorMode,
+  StackDivider,
+  Divider,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { Fragment } from "react";
-import { IoStar } from "react-icons/io5";
+import {
+  IoHeart,
+  IoStar,
+  IoText,
+  IoThumbsUp,
+  IoChatbubbleEllipses,
+  IoChatbubbleEllipsesOutline,
+  IoShareOutline,
+} from "react-icons/io5";
 import BreadCrumb from "../common/components/BreadCrumb";
 import Card from "../common/components/dataDisplay/Card";
 import WhatDoYouThink from "../common/components/dataInput/WhatDoYouThink";
@@ -164,6 +174,40 @@ function PopularPosts() {
             maxHeight="20rem"
             src="https://picsum.photos/400/1000"
           ></CharkaImage>
+
+          <Divider mt={1} />
+          {/* like, comment, share */}
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            gridColumnGap={2}
+            mt={2}
+          >
+            <Box
+              as="span"
+              color="pink.400"
+              display="flex"
+              alignItems="center"
+              gridColumnGap={0.5}
+            >
+              <Icon as={IoHeart} />
+              1.5k loves
+            </Box>
+            <Box
+              as="span"
+              color="gray.500"
+              display="flex"
+              alignItems="center"
+              gridColumnGap={0.5}
+            >
+              <Icon as={IoChatbubbleEllipsesOutline} />
+              1.5k comments
+            </Box>
+            <Box as="span" color="gray.500" alignItems="items-center">
+              <Icon as={IoShareOutline} />
+              1.5k shares
+            </Box>
+          </Flex>
         </Box>
       </Stack>{" "}
     </Box>

@@ -24,7 +24,9 @@ function WhatDoYouThink({}: Props): ReactElement {
       />
       <VStack ml={2} spacing={1} flexGrow={1}>
         <Textarea placeholder="Bạn đang nghĩ gì?"></Textarea>
-        <Button>Gửi</Button>
+        <Button variant="solid" colorScheme="blue">
+          Gửi
+        </Button>
       </VStack>
     </Flex>
   );
