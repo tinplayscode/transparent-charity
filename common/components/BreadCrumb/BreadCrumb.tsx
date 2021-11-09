@@ -1,5 +1,6 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
+import Link from 'next/link'
 
 interface Link {
   name: string;
@@ -15,7 +16,9 @@ export default function BreadCrumb({ items }: Props): ReactElement {
     <Breadcrumb fontWeight="medium" fontSize="sm" mt={2} mx={2}>
       {items.map((item, index) => (
         <BreadcrumbItem isCurrentPage={index == items.length} key={index}>
-          <BreadcrumbLink href={item.url}>{item.name}</BreadcrumbLink>
+				<Link href={item.url} passHref>
+          <BreadcrumbLink>{item.name}</BreadcrumbLink>
+				</Link>
         </BreadcrumbItem>
       ))}
     </Breadcrumb>

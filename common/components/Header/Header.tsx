@@ -1,22 +1,39 @@
 import {
+	Text,
 	Box,
 	Button,
 	Flex,
 	Heading,
 	Icon,
-	Link as CharkaLink,
+	Link as ChakraLink,
 	useColorMode,
+	Popover,
+	PopoverTrigger,
+	PopoverContent,
+	PopoverHeader,
+	PopoverBody,
+	PopoverFooter,
+	PopoverArrow,
+	PopoverCloseButton,
+	Portal,
 } from "@chakra-ui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import { IoPersonCircle, IoSunny, IoMoon, IoList } from "react-icons/io5";
+import {
+	IoPersonCircle,
+	IoSunny,
+	IoMoon,
+	IoList,
+	IoLogoGoogle,
+	IoLogOut,
+} from "react-icons/io5";
 
 interface Props {}
 
 function Header({}: Props): ReactElement {
 	const { colorMode, toggleColorMode } = useColorMode();
-	const { data, status } = useSession({required: false});
+	const { data, status } = useSession({ required: false });
 
 	return (
 		<>
@@ -33,48 +50,94 @@ function Header({}: Props): ReactElement {
 				paddingX={{ base: 4, md: 16 }}
 			>
 				<Link href="/">
-					<CharkaLink
-						padding={4}
+					<ChakraLink
+						padding={1}
 						rounded="2xl"
-						_hover={{ backgroundColor: "pink.100" }}
+						transition="all 0.2s"
+						_hover={{
+							textDecoration: "none",
+							_after: {
+								width: "100%",
+								left: 0,
+							},
+						}}
+						_after={{
+							content: "''",
+							width: "0px",
+							height: "2px",
+							display: "block",
+							background: "black",
+							transition: "300ms",
+						}}
 					>
-						<Heading fontFamily="monospace" fontSize="2xl" as="h1">
-							TuthienMinhbach
+						<Heading fontSize={{ base: "md", md: "xl" }} as="h1">
+							<Flex flexDirection="column">
+								<span>Từ Thiện</span>
+								<span>Minh bạch</span>
+							</Flex>
 						</Heading>
-					</CharkaLink>
+					</ChakraLink>
 				</Link>
 
-				<Box justifyContent="flex-end" display="flex" gridColumnGap={0}>
+				<Flex justifyContent="flex-end" alignItems="center" gridColumnGap={2}>
 					<Link href="/categories">
-						<CharkaLink>
+						<ChakraLink>
 							<Button
 								variant="solid"
 								colorScheme="cyan"
-								size="md"
+								size="sm"
 								leftIcon={<IoList />}
 							>
 								Dự án
 							</Button>
-						</CharkaLink>
+						</ChakraLink>
 					</Link>
-					<Button
-						variant="ghost"
-						display="flex"
-						alignItems="center"
-						onClick={() => {
-							if (status === "loading") {
-								return;
-							}
-
-							if (status === "authenticated") {
-								signOut();
-							} else {
-								signIn();
-							}
-						}}
-					>
-						<Icon as={IoPersonCircle} boxSize={6} />
-					</Button>
+					<Popover>
+						<PopoverTrigger>
+							<Button variant="ghost" display="flex" alignItems="center">
+								<Icon as={IoPersonCircle} boxSize={6} />
+							</Button>
+						</PopoverTrigger>
+						<Portal>
+							<PopoverContent>
+								<PopoverArrow />
+								<PopoverHeader>
+									Xin chào{" "}
+									<strong>{`${data ? data.user.name : "Khách"}`}</strong>
+								</PopoverHeader>
+								<PopoverCloseButton />
+								<PopoverBody>
+									{status === "authenticated" ? (
+										<Button
+											colorScheme="blue"
+											leftIcon={<IoLogOut />}
+											onClick={() => {
+												signOut();
+											}}
+										>
+											Đăng xuất
+										</Button>
+									) : (
+										<Button
+											colorScheme="blue"
+											leftIcon={<IoLogoGoogle />}
+											onClick={() => {
+												signIn("google");
+											}}
+										>
+											Đăng nhập với Google
+										</Button>
+									)}
+								</PopoverBody>
+								<PopoverFooter>
+									<Text fontSize="sm">
+										Bằng việc đăng nhập, bạn đồng ý với{" "}
+										<ChakraLink>Điều khoản dịch vụ</ChakraLink>.
+									</Text>
+								</PopoverFooter>
+							</PopoverContent>
+						</Portal>
+					</Popover>
 
 					<Button variant="ghost" onClick={toggleColorMode}>
 						{colorMode === "light" ? (
@@ -83,22 +146,26 @@ function Header({}: Props): ReactElement {
 							<Icon as={IoSunny} boxSize={5} />
 						)}
 					</Button>
-				</Box>
+				</Flex>
 			</Flex>
 
 			{/*Charka UI toast*/}
-			<Box
-				zIndex={100}
-				padding={4}
-				bg="red.100"
-				color="red.500"
-				fontSize="sm"
-				fontWeight="bold"
-				textAlign="center"
-				borderRadius="md"
-			>
-				{data && data.user.name}
-			</Box>
+			{data && (
+				<Box
+					zIndex={100}
+					padding={4}
+					my={2}
+					mx={4}
+					bg="green.200"
+					color="black"
+					fontSize="sm"
+					fontWeight="normal"
+					textAlign="center"
+					borderRadius="md"
+				>
+					Bạn đang đăng nhập với {data.user.name}
+				</Box>
+			)}
 		</>
 	);
 }
