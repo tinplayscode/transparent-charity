@@ -7,12 +7,16 @@ import { Category, Project } from "@prisma/client";
 import useThemeColor from "common/hooks/useThemeColor";
 import Card from "common/components/dataDisplay/Card";
 
+interface CategoryFix extends Category {
+	projects: Project[];
+}
+
 export interface indexProps {}
 
 const fetcher = (url: string) =>
 	axios.get(url).then((res: AxiosResponse) => res.data);
 
-export default function index(props: indexProps): ReactElement | null {
+export default function Home(props: indexProps): ReactElement | null {
 	const { data, error } = useSWR("/api/v1/category", fetcher);
 	const { boxBackground } = useThemeColor();
 
@@ -23,7 +27,7 @@ export default function index(props: indexProps): ReactElement | null {
 	return (
 		<div>
 			<h1>Projects</h1>
-			{data.categories.map((category: Category) => {
+			{data.categories.map((category: CategoryFix) => {
 				return (
 					<Box
 						key={category.id}

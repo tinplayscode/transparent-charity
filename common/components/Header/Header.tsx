@@ -16,7 +16,7 @@ interface Props {}
 
 function Header({}: Props): ReactElement {
 	const { colorMode, toggleColorMode } = useColorMode();
-	const { data, status } = useSession();
+	const { data, status } = useSession({required: false});
 
 	return (
 		<>

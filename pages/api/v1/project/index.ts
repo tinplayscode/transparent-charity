@@ -27,6 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					data: {
 						name: name as string,
 						description: description as string,
+						money: 100000,
 						ownerId: session.id as string,
 					},
 				});
